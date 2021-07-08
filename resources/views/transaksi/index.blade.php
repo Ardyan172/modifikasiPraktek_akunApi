@@ -66,7 +66,8 @@
           </div>
         </div>
       </nav>
-      <!-- End Navbar -->
+
+      <!-- Content -->
       <div class="content">
         <div class="container-fluid">
           <div class="row">
@@ -77,6 +78,8 @@
                   <p class="card-category">Table yang menunjukkan semua daftar transaksi</p>
                 </div>
                 <div class="card-body">
+                  <a href="/transaksi/create" class="btn btn-primary">Buat Transaksi Baru</a>
+
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead class="text-primary">
@@ -86,20 +89,25 @@
                         <th>Tipe</th>
                         <th>Waktu Transaksi</th>
                         <th>Jumlah Transaksi</th>
+                        <th>Aksi</th>
                       </thead>
 
                       <tbody>
-                        @foreach($semuaTransaksi as $transaksi)
                         <?php $nomor = 1; ?>
+                        @foreach($semuaTransaksi as $transaksi)                        
                         <tr>
-                          <td>{{ $nomor++ }}</td>
+                          <td>{{ $nomor++; }}</td>
                           <td>{{ $transaksi->namaTransaksi }}</td>
                           <td>
                             <img src="{{ asset('foto_transaksi') }}/{{ $transaksi->fotoTransaksi }}" alt="Foto Transaksi" width="75">
                           </td>
                           <td>{{ $transaksi->tipeTransaksi }}</td>
-                          <td>{{ $transaksi->tipeTransaksi }}</td>
+                          <td>{{ $transaksi->waktuTransaksi }}</td>
                           <td>{{ $transaksi->jumlahTransaksi }}</td>
+                          <td>
+                            <a href="/transaksi/hapus/{{ $transaksi->id }}" class="btn btn-sm btn-danger">Hapus</a>
+                            <a href="/transaksi/detail/{{ $transaksi->id }}" class="btn btn-sm btn-success">Detail</a>
+                          </td>
                         </tr>
                         @endforeach
                       </tbody>
