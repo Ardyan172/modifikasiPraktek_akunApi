@@ -94,7 +94,8 @@ class TransaksiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detailTransaksi = $this->Transaksi->detailData($id);
+        return view('transaksi.formulirEditTransaksi', ['detailTransaksi' => $detailTransaksi]);
     }
 
     /**

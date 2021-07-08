@@ -107,6 +107,7 @@
                           <td>
                             <a href="/transaksi/hapus/{{ $transaksi->id }}" class="btn btn-sm btn-danger">Hapus</a>
                             <a href="/transaksi/detail/{{ $transaksi->id }}" class="btn btn-sm btn-success">Detail</a>
+                            <a href="/transaksi/edit/{{ $transaksi->id }}" class="btn btn-sm btn-warning">Edit</a>
                           </td>
                         </tr>
                         @endforeach
