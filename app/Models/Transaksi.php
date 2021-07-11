@@ -32,4 +32,17 @@ class Transaksi extends Model
     {
         return DB::table('transaksi')->find($id);
     }
+
+    // seandainya user tidak memilih gambar
+    public function updateData($id, $request, $foto) 
+    {
+        return DB::table('transaksi')
+        ->where('id', $id)
+        ->update([
+            'namaTransaksi' => $request->namaTransaksi,
+            'tipeTransaksi' => $request->tipeTransaksi,
+            'jumlahTransaksi' => $request->jumlahTransaksi,
+            'fotoTransaksi' => $foto
+        ]);
+    }
 }

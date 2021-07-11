@@ -57,9 +57,14 @@ class TransaksiController extends Controller
 
         [
             'namaTransaksi.required' => 'ups, nama transaksi harus diisi',
+            'namaTransaksi.min' => 'ups, minimal dua huruf',
+            'namaTransaksi.max' => 'ups, maksimal 50 huruf',
             'tipeTransaksi.required' => 'ups, tipe transaksi harus diisi',
             'jumlahTransaksi.required' => 'ups, jumlah transaksi harus diisi',
-            'fotoTransaksi.required' => 'ups, foto transaksi harus dimasukan'
+            'jumlahTransaksi.numeric' => 'ups, hanya boleh memasukkan angka',
+            'jumlahTransaksi.min' => 'ups, minimal nominal transaksi adalah 10000',
+            'fotoTransaksi.required' => 'ups, foto transaksi harus dimasukan',
+            'fotoTransaksi.mimes' => 'hanya boleh memasukkan foto yang berekstensi jpg, png dan jpeg'
         ]);
 
         if ($request->hasFile('fotoTransaksi') ) {
@@ -107,7 +112,48 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validasi = $request->validate([
+            // validasi semua permintaan data yang diisi di formulir method create
+            'namaTransaksi' => ['required', 'min:2', 'max:50'],
+            'tipeTransaksi' => ['required'],
+            'jumlahTransaksi' => ['required', 'numeric', 'min:1000'],
+            'fotoTransaksi' => ['mimes:jpg,png,jpeg']
+        ],
+
+        [
+            'namaTransaksi.required' => 'ups, nama transaksi harus diisi',
+            'namaTransaksi.min' => 'ups, minimal dua huruf',
+            'namaTransaksi.max' => 'ups, maksimal 50 huruf',
+            'tipeTransaksi.required' => 'ups, tipe transaksi harus diisi',
+            'jumlahTransaksi.required' => 'ups, jumlah transaksi harus diisi',
+            'jumlahTransaksi.numeric' => 'ups, hanya boleh memasukkan angka',
+            'jumlahTransaksi.min' => 'ups, minimal nominal transaksi adalah 1000',
+            'fotoTransaksi.mimes' => 'hanya boleh memasukkan foto yang berekstensi jpg, png dan jpeg'
+        ]);
+
+        if ($request->hasFile('fotoTransaksi') ) {
+            // jika user memilih mengganti foto
+            $dapatkanFoto = $request->fotoTransaksi;
+            $namaFotoBaru = $request->namaTransaksi . '.' . $dapatkanFoto->extension();
+            $dapatkanFoto->move(public_path('foto_transaksi'), $namaFotoBaru);
+            // move menerima 2 argumen
+            // argumen pertama adalah jalur publik yang dituju
+            // argumen kedua adalah nama foto baru
+
+            $this->Transaksi->updateData($id, $request, $namaFotoBaru);
+            // kalau user memasukkan type transaksi tapi mengaktifkan translate maka akan error
+            
+            return redirect('/transaksi');
+        } else {
+            // jancok, jika user tidak memilih gambar maka saya akan memanggil gambar lama lalu mengirimkannya sebagai argumen
+            $detailData = $this->Transaksi->detailData($id);
+            // seharusnya $detailData berisi semua data dari id yang dipilih
+            $fotoLama = $detailData->fotoTransaksi;
+            $this->Transaksi->updateData($id, $request, $fotoLama);
+            // kalau user memasukkan type transaksi tapi mengaktifkan translate maka akan error
+            
+            return redirect('/transaksi');
+        }
     }
 
     /**
