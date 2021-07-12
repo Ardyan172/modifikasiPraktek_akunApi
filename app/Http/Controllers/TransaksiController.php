@@ -24,9 +24,9 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $semuaTransaksi = $this->Transaksi->ambilSemuaBaris();
+        $semuaDataTransaksi = $this->Transaksi->ambilSemuaBaris();
 
-        return view('transaksi.index', ['semuaTransaksi' => $semuaTransaksi]);
+        return view('transaksi.index', ['semuaTransaksi' => $semuaDataTransaksi]);
     }
 
     /**
