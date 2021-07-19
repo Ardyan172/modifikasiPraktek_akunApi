@@ -36,7 +36,7 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        return view("transaksi.formulirCreateTransaksi");
+        return view('transaksi.formulirCreateTransaksi');
     }
 
     /**
@@ -76,7 +76,9 @@ class TransaksiController extends Controller
         $this->Transaksi->tambahData($request, $namaFotoBaru);
         // kalau user memasukkan type transaksi tapi mengaktifkan translate maka akan error
 
-        return redirect('/transaksi');
+        return redirect('/')->with('status', 'Data Berhasil Ditambah');
+        // mengarahkan dengan data sesi yang di flash
+        // di dapatkan dari menu response
     }
 
     /**
@@ -143,7 +145,7 @@ class TransaksiController extends Controller
             $this->Transaksi->updateData($id, $request, $namaFotoBaru);
             // kalau user memasukkan type transaksi tapi mengaktifkan translate maka akan error
             
-            return redirect('/transaksi');
+            return redirect('/');
         } else {
             // jancok, jika user tidak memilih gambar maka saya akan memanggil gambar lama lalu mengirimkannya sebagai argumen
             $detailData = $this->Transaksi->detailData($id);
@@ -152,7 +154,7 @@ class TransaksiController extends Controller
             $this->Transaksi->updateData($id, $request, $fotoLama);
             // kalau user memasukkan type transaksi tapi mengaktifkan translate maka akan error
             
-            return redirect('/transaksi');
+            return redirect('/')->with('status', 'Data berhasil diubah');
         }
     }
 
@@ -171,6 +173,12 @@ class TransaksiController extends Controller
         }
         
         $this->Transaksi->hapusData($id);
-        return redirect('/transaksi');
+        return redirect('/')->with('status', 'Data berhasil dihapus');
+    }
+
+    public function cari(Request $request) 
+    {
+        $keyword = $this->Transaksi->cari($request->cari);
+        return view('transaksi.index', ['semuaTransaksi' => $keyword]);
     }
 }

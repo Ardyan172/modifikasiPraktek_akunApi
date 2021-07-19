@@ -73,7 +73,7 @@
           <div class="row">
             <div class="col-md-12">
               <!-- formulir untuk membuat transaksi baru -->
-              <form action="/transaksi" method="POST" enctype="multipart/form-data">
+              <form action="/transaksi/transaksiBaru" method="post" enctype="multipart/form-data">
                 <!-- arahkan ke url transaksi, TransaksiController lalu method store -->
                 @csrf
                 <div class="form-group">

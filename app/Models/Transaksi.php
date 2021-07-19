@@ -10,7 +10,7 @@ class Transaksi extends Model
 {
     public function ambilSemuaBaris()
     {
-        return DB::table('transaksi')->get();
+        return DB::table('transaksi')->simplePaginate(3);
     }
 
     public function tambahData($request, $namaFotoBaru)
@@ -44,5 +44,12 @@ class Transaksi extends Model
             'jumlahTransaksi' => $request->jumlahTransaksi,
             'fotoTransaksi' => $foto
         ]);
+    }
+
+    public function cari($request)
+    {
+        return DB::table('transaksi')
+            ->where('namaTransaksi','like','%'.$request.'%');
+
     }
 }

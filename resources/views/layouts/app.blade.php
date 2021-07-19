@@ -56,16 +56,8 @@
             <span class="navbar-toggler-icon icon-bar"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end">
-            <form action="" method="" class="navbar-form">
-              @csrf
-              <div class="input-group no-border">
-                <input type="text" name="search" class="form-control" placeholder="Cari...">
-                <button type="submit" class="btn btn-primary btn-round btn-just-icon">
-                  <i class="material-icons">search</i>
-                  <div class="ripple-container"></div>
-                </button>
-              </div>
-            </form>
+            @yield('fitur_cari')
+            <!-- opsional -->
 
             <ul class="navbar-nav">
               <li class="nav-item">

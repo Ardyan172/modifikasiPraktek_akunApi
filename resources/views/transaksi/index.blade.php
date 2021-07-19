@@ -2,7 +2,30 @@
 
 @section('title', 'Halaman Transaksi')
 
+@section('fitur_cari')
+<form action="/transaksi/search" method="get" class="navbar-form">
+  @csrf
+  <div class="input-group no-border">
+    <input type="text" name="cari" class="form-control" placeholder="Cari transaksi">
+    <button type="submit" class="btn btn-primary btn-round btn-just-icon">
+      <i class="material-icons">search</i>
+      <div class="ripple-container"></div>
+    </button>
+  </div>
+</form>
+@endsection
+
 @section('table_transaksi')
+@if (session('status'))
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success">
+        {{ session('status') }}
+      </div>
+    </div>
+  </div>
+@endif
+
 <div class="row">
   <div class="col-md-12">
     <div class="card">
@@ -50,5 +73,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="row justify-content-center">
+  {{ $semuaTransaksi->links() }}
 </div>
 @endsection
